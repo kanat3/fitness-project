@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  postgresql_db:
+    container_name: fitness_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=anna
+    image: postgres:15.2-alpine
+    restart: always
+    volumes:
+      - ./cache/postgres-data/data:/var/lib/postgresql/data
+      - ./postgresql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
