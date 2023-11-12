@@ -12,7 +12,7 @@
 
 ## Tech
 
-- [Golang] - version 1.20.7
+- [Golang] - version 1.21.4
 - [PostgreSQL] - image 15.2-alpine
 - [Docker] - version 24.0.5
 - [Docker-Compose] - version 1.29.2
