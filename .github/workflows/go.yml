@@ -23,5 +23,7 @@ jobs:
     - name: Build
       run: |
         export CONFIG_PATH=backend/config/local.yaml
+        pwd
+        ls -a
         cd fitness-project/backend
         go build .
