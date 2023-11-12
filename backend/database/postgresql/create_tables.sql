@@ -75,7 +75,8 @@ create table if not exists coach_classes_list (
 create table if not exists bid (
     id_bid serial primary key,
     optional_goal text,
-    optional_message text
+    optional_message text,
+    created timestamp not null
 );
 
 create table if not exists bid_by_user (

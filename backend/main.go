@@ -57,4 +57,5 @@ func main() {
 	// init router
 
 	// run server
+	fmt.Println("Backend is running...")
 }

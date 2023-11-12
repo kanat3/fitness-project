@@ -23,7 +23,7 @@
 
 Set environments
 ```
-export CONFIG_PATH=backend/config/local.yaml
+export CONFIG_PATH=config/local.yaml
 ```
 Up database. You can connect to db using 5432 port
 ```

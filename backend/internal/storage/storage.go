@@ -83,9 +83,10 @@ type CoachClassesList struct {
 }
 
 type Bid struct {
-	ID              int    `json:"id_bid"`
-	OptionalGoal    string `json:"optional_goal"`
-	OptionalMessage string `json:"optional_message"`
+	ID              int       `json:"id_bid"`
+	OptionalGoal    string    `json:"optional_goal"`
+	OptionalMessage string    `json:"optional_message"`
+	Created         time.Time `json:"created"`
 }
 
 type BidByUser struct {
@@ -198,6 +199,8 @@ func (s *Storage) HealCheck() error {
 
 	return nil
 }
+
+/* Setters */
 
 func (s *Storage) SetStructUsers(user User) error {
 
@@ -338,7 +341,7 @@ func (s *Storage) SetStructBid(bid Bid) error {
 	const op = "storage.SetStructBid"
 
 	query :=
-		"INSERT INTO bid (optional_goal, optional_message) VALUES ($1, $2)"
+		"INSERT INTO bid (optional_goal, optional_message, created) VALUES ($1, $2, $3)"
 
 	_, err := s.db.Exec(query, bid.OptionalGoal, bid.OptionalMessage)
 	if err != nil {
@@ -467,3 +470,212 @@ func (s *Storage) SetStructStatus(status Status) error {
 
 	return nil
 }
+
+/* Getters */
+
+func (s *Storage) GetUserByID(userID int) (User, error) {
+
+	const op = "storage.GetUserByID"
+
+	var user User
+
+	err := s.db.QueryRow("SELECT id_users, first_name, second_name, last_name, phone, email, profile_img, created FROM users WHERE id_users = $1", userID).Scan(
+		&user.ID,
+		&user.FirstName,
+		&user.SecondName,
+		&user.LastName,
+		&user.Phone,
+		&user.Email,
+		&user.ProfileImg,
+		&user.Created,
+	)
+
+	if err != nil {
+		return User{}, fmt.Errorf("%s: %w", op, err)
+	}
+
+	return user, nil
+}
+
+func (s *Storage) GetUserContactsById(userID int) (Contacts, error) {
+
+	const op = "storage.GetUserContactsById"
+
+	var contacts Contacts
+
+	err := s.db.QueryRow(fmt.Sprintf("SELECT option_link, tg_link, inst_link, vk_link, refusers FROM contacts WHERE refusers = %d", userID)).Scan(
+		&contacts.OptionLink,
+		&contacts.TgLink,
+		&contacts.InstLink,
+		&contacts.VkLink,
+		&contacts.RefUsers,
+	)
+
+	if err != nil {
+		return Contacts{}, fmt.Errorf("%s: %w", op, err)
+	}
+
+	return contacts, nil
+}
+
+func (s *Storage) GetLastWorkoutPlan(userID int) (WorkoutPlan, error) {
+
+	const op = "storage.GetLastWorkoutPlan"
+
+	query := (fmt.Sprintf("SELECT wp.id_workout_plan, wp.day_plan, wp.dplan_created, wp.week_plan, wp.wplan_created"+
+		"FROM workout_plan wp"+
+		"JOIN workout_plan_list wpl ON wp.id_workout_plan = wpl.refworkout_plan"+
+		"WHERE wpl.refusers = %d"+
+		"ORDER BY wp.wplan_created DESC"+
+		"LIMIT 1", userID))
+
+	var latestWorkoutPlan WorkoutPlan
+
+	err := s.db.QueryRow(query, userID).Scan(
+		&latestWorkoutPlan.ID,
+		&latestWorkoutPlan.DayPlan,
+		&latestWorkoutPlan.DPlanCreated,
+		&latestWorkoutPlan.WeekPlan,
+		&latestWorkoutPlan.WPlanCreated,
+	)
+
+	if err != nil {
+		return WorkoutPlan{}, fmt.Errorf("%s: %w", op, err)
+	}
+
+	return latestWorkoutPlan, nil
+}
+
+/* TODO:
+func (s *Storage) GetWorkoutPlanList(userID int) error {
+
+	const op = "storage.GetWorkoutPlanList"
+
+}
+*/
+
+func (s *Storage) GetLastDietPlan(userID int) (DietPlan, error) {
+
+	const op = "storage.GetLastDietPlan"
+
+	query := (fmt.Sprintf("SELECT dp.id_diet_plan, dp.day_plan, dp.dplan_created, dp.week_plan, wp.wplan_created"+
+		"FROM diet_plan dp"+
+		"JOIN diet_plan_list dpl ON dp.id_diet_plan = dpl.refdiet_plan"+
+		"WHERE dpl.refusers = %d"+
+		"ORDER BY dp.dplan_created DESC"+
+		"LIMIT 1", userID))
+
+	var latestDietPlan DietPlan
+
+	err := s.db.QueryRow(query, userID).Scan(
+		&latestDietPlan.ID,
+		&latestDietPlan.DayPlan,
+		&latestDietPlan.DPlanCreated,
+		&latestDietPlan.WeekPlan,
+		&latestDietPlan.WPlanCreated,
+	)
+
+	if err != nil {
+		return DietPlan{}, fmt.Errorf("%s: %w", op, err)
+	}
+
+	return latestDietPlan, nil
+}
+
+/* TODO:
+func (s *Storage) GetStructDietPlanList() error {
+
+	const op = "storage.GetStructDietPlanList"
+
+}
+*/
+
+func (s *Storage) GetCoachById(coachID int) (Coach, error) {
+
+	const op = "storage.GetCoachById"
+
+	var coach Coach
+
+	err := s.db.QueryRow(fmt.Sprintf("SELECT id_coach, first_name, second_name, last_name, email, profile_img, created FROM coach WHERE id_coach = %d", coachID)).Scan(
+		&coach.ID,
+		&coach.FirstName,
+		&coach.SecondName,
+		&coach.LastName,
+		&coach.Email,
+		&coach.ProfileImg,
+		&coach.Created,
+	)
+
+	if err != nil {
+		return Coach{}, fmt.Errorf("%s: %w", op, err)
+	}
+
+	return coach, nil
+}
+
+/* TODO:
+func (s *Storage) GetStructFitClasses() error {
+
+	const op = "storage.GetStructFitClasses"
+
+	return nil
+}
+*/
+
+/* TODO:
+func (s *Storage) GetStructCoachClassesList() error {
+
+	const op = "storage.GetStructCoachClassesList"
+
+}
+*/
+
+/*TODO
+func (s *Storage) GetStructBid() error {
+
+	const op = "storage.GetStructBid"
+
+	return nil
+}
+*/
+
+func (s *Storage) GetLastBidByUser(userID int) (Bid, error) {
+
+	const op = "storage.GetBidByUser"
+
+	var bid Bid
+
+	err := s.db.QueryRow(fmt.Sprintf("SELECT id_bid, optional_goal, optional_message FROM bid"+
+		"JOIN bid_by_user bbu ON bbu.refid_bid = bid.id_bid"+
+		"WHERE bid.id_bid = %d"+
+		"ORDER BY bid.created"+
+		"LIMIT 1", userID)).Scan(
+		&bid.ID,
+		&bid.OptionalGoal,
+		&bid.OptionalMessage,
+		&bid.Created,
+	)
+
+	if err != nil {
+		return Bid{}, fmt.Errorf("%s: %w", op, err)
+	}
+
+	return bid, nil
+}
+
+/* TODO:
+func (s *Storage) GetStructFitClassesBid() error {
+
+	const op = "storage.GetStructFitClassesBid"
+
+}
+*/
+
+/* TODO:
+func (s *Storage) GetCenters() error {
+
+	const op = "storage.GetStructCenters"
+}
+*/
+
+/* TODO: add getters for frontend methods */
