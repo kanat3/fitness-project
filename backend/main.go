@@ -1,9 +1,14 @@
 package main
 
 import (
+	"fitness-project/backend/api"
 	"fitness-project/backend/internal/config"
 	"fitness-project/backend/internal/storage"
 	"fmt"
+	"net/http"
+	"os"
+
+	"github.com/gorilla/handlers"
 )
 
 const (
@@ -55,7 +60,10 @@ func main() {
 	*/
 
 	// init router
-
+	r := api.InitRouter()
+	// api
+	r.Handle("/status", api.Status()).Methods("GET")
 	// run server
 	fmt.Println("Backend is running...")
+	http.ListenAndServe(":8080", handlers.LoggingHandler(os.Stdout, r))
 }
