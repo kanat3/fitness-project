@@ -24,6 +24,7 @@ type User struct {
 	Email      string    `json:"email"`
 	ProfileImg string    `json:"profile_img"`
 	Created    time.Time `json:"created"`
+	Password   string    `json:"password"`
 }
 
 type Contacts struct {
@@ -135,6 +136,9 @@ type Status struct {
 	Type   string `json:"type"`
 }
 
+// set global
+var StoragePSQL *Storage = nil
+
 func (s *Storage) ConnectToDB() (err error) {
 	const op = "storage.New"
 
@@ -147,6 +151,9 @@ func (s *Storage) ConnectToDB() (err error) {
 
 	db, err := sql.Open("postgres", connStr)
 	s.db = db
+
+	// set global
+	StoragePSQL = s
 
 	if err != nil {
 		return fmt.Errorf("%s: %w", op, err)
@@ -206,9 +213,9 @@ func (s *Storage) SetStructUsers(user User) error {
 
 	const op = "storage.SetStructUsers"
 
-	query := "INSERT INTO users (first_name, second_name, last_name, phone, email, profile_img, created) VALUES ($1, $2, $3, $4, $5, $6, $7)"
+	query := "INSERT INTO users (first_name, second_name, last_name, phone, email, profile_img, created, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
 
-	_, err := s.db.Exec(query, user.FirstName, user.SecondName, user.LastName, user.Phone, user.Email, user.ProfileImg, user.Created)
+	_, err := s.db.Exec(query, user.FirstName, user.SecondName, user.LastName, user.Phone, user.Email, user.ProfileImg, user.Created, user.Password)
 	if err != nil {
 		return fmt.Errorf("%s: %w", op, err)
 	}
@@ -479,7 +486,7 @@ func (s *Storage) GetUserByID(userID int) (User, error) {
 
 	var user User
 
-	err := s.db.QueryRow("SELECT id_users, first_name, second_name, last_name, phone, email, profile_img, created FROM users WHERE id_users = $1", userID).Scan(
+	err := s.db.QueryRow("SELECT id_users, first_name, second_name, last_name, phone, email, profile_img, created, password FROM users WHERE id_users = $1", userID).Scan(
 		&user.ID,
 		&user.FirstName,
 		&user.SecondName,
@@ -488,6 +495,7 @@ func (s *Storage) GetUserByID(userID int) (User, error) {
 		&user.Email,
 		&user.ProfileImg,
 		&user.Created,
+		&user.Password,
 	)
 
 	if err != nil {
@@ -679,3 +687,20 @@ func (s *Storage) GetCenters() error {
 */
 
 /* TODO: add getters for frontend methods */
+
+/* Functions */
+
+func (s *Storage) IsUserByEmail(email string) (User, error) {
+
+	const op = "storage.IsUserByEmail"
+
+	query := "SELECT id_users, email, password FROM users WHERE email = '%s' LIMIT 1"
+
+	var user User
+	err := s.db.QueryRow(fmt.Sprintf(query, email)).Scan(&user.ID, &user.Email, &user.Password)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
+}

@@ -1,20 +1,20 @@
 package api
 
 import (
-	"net/http"
+	"fitness-project/backend/middleware"
 
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 )
 
-func InitRouter() *mux.Router {
-	var r *mux.Router
-	r = mux.NewRouter()
-	return r
+func InitHandlers(r *gin.Engine) {
+	r.POST("/login", middleware.Login)
+	r.POST("/signup", middleware.Signup)
+	r.GET("/logout", middleware.Logout)
+	r.GET("/status", Status)
 }
 
-func Status() http.Handler {
-	var Status = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Router is working"))
-	})
-	return Status
+// status
+func Status(c *gin.Context) {
+	const op = "api.status"
+	c.JSON(200, gin.H{"status": "ok", "from": op})
 }

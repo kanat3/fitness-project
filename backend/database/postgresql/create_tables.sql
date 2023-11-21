@@ -6,7 +6,8 @@ create table if not exists users (
     phone varchar(20) check (phone ~ '^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$'),
     email varchar(254) not null,
     profile_img varchar(400),
-    created timestamp not null
+    created timestamp not null,
+    password varchar(120) not null
 );
 
 create table if not exists contacts (
