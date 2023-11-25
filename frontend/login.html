@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Личный кабинет</title>
+
+    <title>Кнопка</title>
+    <style>
+        .btn {
+            display: inline-block;
+            background: #3CB371;
+            color: #fff;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            border-radius: 3px;
+
+            text-align: center;
+            width: 310px;
+            margin-bottom: 50px;
+        }
+        .button {
+            border-radius: 4px;
+            background-color: #000080;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 20px;
+            padding: 20px;
+            width: 500px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+            margin-top: 50px;
+            width: 300px;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+    </style>
+    
+</head>
+<body>
+    <header>
+        <h1>Личный кабинет</h1>
+    </header>
+    
+    <nav><a href="about.html" button class="button"><span>О нас</span></a>
+         <a href="trainers.html" button class="button"><span>Тренеры</span></a>
+         <a href="tariffs.html" button class="button"><span>Тарифы</span></a>
+         <a href="contact.html" button class="button"><span>Контакты</span></a>
+         <a href="login.html" button class="button"><span>Личный кабинет</span></a>
+    </nav>
+    
+    <section>
+        <h2>Войти в личный кабинет</h2>
+        <!-- Здесь должна быть форма входа или другой контент -->
+    </section>
+    
+    <footer>
+        <p>&copy; 2023 Фитнес-центр. Все права защищены.</p>
+    </footer>
+</body>
+</html>

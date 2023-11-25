@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Фитнес-центр</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Кнопка</title>
+    <style>
+    	.btn {
+	    	display: inline-block;
+	    	background: #000080;
+	    	color: #fff;
+	    	padding: 1rem 1.5rem;
+	    	text-decoration: none;
+	    	border-radius: 3px;
+
+	  		text-align: center;
+	  		width: 310px;
+	  		margin-bottom: 50px;
+	  		margin-top: 50px;
+		}
+
+		.slideshow {
+			width: 100%;
+			height: 700px;
+			position: relative;
+			overflow: hidden;
+			background: #000;
+			margin: 20px 0;
+			margin-top: 50px;
+		}
+		.slideshow-item {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			opacity: 0;
+			animation: slideanim 40s infinite;
+		}
+		.slideshow-item:nth-child(1),
+		.slideshow-item:nth-child(1) img {
+			animation-delay: 0;
+		}
+		.slideshow-item:nth-child(2),
+		.slideshow-item:nth-child(2) img {
+			animation-delay: 10s;
+		}
+		.slideshow-item:nth-child(3),
+		.slideshow-item:nth-child(3) img {
+			animation-delay: 20s;
+		}
+		.slideshow-item:nth-child(4),
+		.slideshow-item:nth-child(4) img {
+			animation-delay: 30s;
+		}
+		.slideshow-item img {
+    		width: 100%;
+    		height: 100%;
+    		object-fit: cover;
+    		animation: zoom 40s infinite;
+		}
+		.slideshow-item-text {
+    		max-width: 50%;
+    		position: absolute;
+    		bottom: 20px;
+    		left: 20px;
+   			background-color: rgba(0,0,0,0.7);
+   			color: #fff;
+    		padding: 20px 30px;
+    		font-family: Verdana, sans-serif;      
+		}
+		.slideshow-item-text h5 {
+    		font-size: 22px;
+    		margin: 0 0 10px 0;
+    		color: #BFE2FF;
+		}
+		.slideshow-item-text p {
+    		font-size: 15px;
+    		margin-bottom: 10px;
+		}
+		@keyframes slideanim {
+    		12.5%{
+        		opacity: 1;
+    		}
+   			25%{
+        		opacity: 1;
+    		}   
+    		37.5%{
+        		opacity: 0;
+    		}
+		}	
+		@keyframes zoom {
+    		50%{
+        		transform: scale(1.3);
+   			}   
+		}
+		@media screen and (max-width: 1100px){
+    		.slideshow-item-text{
+        		max-width: 75%;
+    		}
+		}
+		@media screen and (max-width: 456px){
+    		.slideshow-item-text {
+        		bottom: 0;
+        		left: 0;
+        		max-width: 100%;
+    		}
+    		.slideshow-item-text h5 {
+        		font-size: 18px;
+    		}
+    		.slideshow-item-text p {
+        		font-size: 13px;
+    		}
+		}	
+		.button {
+			border-radius: 4px;
+			background-color: #000080;
+			border: none;
+			color: #FFFFFF;
+			text-align: center;
+			font-size: 20px;
+			padding: 20px;
+			width: 500px;
+			transition: all 0.5s;
+			cursor: pointer;
+			margin: 5px;
+		}
+
+		.button span {
+		  cursor: pointer;
+		  display: inline-block;
+		  position: relative;
+		  transition: 0.5s;
+		  margin-top: 50px;
+		  width: 300px;
+		}
+
+		.button span:after {
+		  content: '\00bb';
+		  position: absolute;
+		  opacity: 0;
+		  top: 0;
+		  right: -20px;
+		  transition: 0.5s;
+		}
+
+		.button:hover span {
+		  padding-right: 25px;
+		}
+
+		.button:hover span:after {
+		  opacity: 1;
+		  right: 0;
+		}
+    </style>
+
+</head>
+<body bgcolor="FFF5EE">
+   <!-- <header>
+        <h1>Добро пожаловать в нашу сеть фитнес-центров FitZone</h1>
+    </header> -->
+
+    <nav><a href="about.html" button class="button"><span>О нас</span></a>
+    	 <a href="trainers.html" button class="button"><span>Тренеры</span></a>
+       	 <a href="tariffs.html" button class="button"><span>Тарифы</span></a>
+       	 <a href="contact.html" button class="button"><span>Контакты</span></a>
+       	 <a href="login.html" button class="button"><span>Личный кабинет</span></a>
+    </nav>
+
+<div class="slideshow">
+    <div class="slideshow-item">
+        <img src="gym1.jpg" alt="">
+        <div class="slideshow-item-text">
+            <h5>FitZone</h5>
+            <p>фитнес-центр</p>
+        </div>
+    </div>
+    <div class="slideshow-item">
+        <img src="gym2.jpg" alt="">
+        <div class="slideshow-item-text">
+            <h5>FitZone</h5>
+            <p>фитнес-центр</p>
+        </div>
+    </div>
+    <div class="slideshow-item">
+        <img src="gym3.jpg" alt="">
+        <div class="slideshow-item-text">
+            <h5>FitZone</h5>
+            <p>фитнес-центр</p>
+        </div>
+    </div>
+    <div class="slideshow-item">
+        <img src="gym4.webp" alt="">
+        <div class="slideshow-item-text">
+            <h5>FitZone</h5>
+            <p>фитнес-центр</p>         
+        </div>
+    </div>
+</div>
+
+    <section>
+        <h2>Добро пожаловать!</h2>
+        <p>Мы предлагаем широкий спектр фитнес-услуг в наших современных и комфортных центрах. Присоединяйтесь к нам и достигайте своих фитнес-целей!</p>
+    </section>
+    
+    <footer>
+        <p>&copy; 2023 Фитнес-центр. Все права защищены.</p>
+    </footer>
+
+</body>
+</html>
