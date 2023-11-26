@@ -14,7 +14,6 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-// The string "my_secret_key" is just an example and should be replaced with a secret key of sufficient length and complexity in a real-world scenario.
 var jwtKey = []byte("my_secret_key")
 
 func GenerateHashPassword(password string) (string, error) {
@@ -62,11 +61,6 @@ func Login(c *gin.Context) {
 
 	existingUser, err := db.IsUserByEmail(user.Email)
 
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error(), "from": op})
-		return
-	}
-
 	if existingUser.ID == 0 {
 		c.JSON(400, gin.H{"error": "user does not exist", "from": op})
 		return
@@ -101,16 +95,16 @@ func Login(c *gin.Context) {
 	c.JSON(200, gin.H{"success": "user logged in", "from": op})
 }
 
-// logout
 func Logout(c *gin.Context) {
 
 	const op = "auth.logout"
 
 	c.SetCookie("token", "", -1, "/", "localhost", false, true)
-	c.JSON(200, gin.H{"success": "user logged out"})
+	c.JSON(200, gin.H{"success": "user logged out", "from": op})
 }
 
-// signout
+/* TODO: add check json, check password lengh */
+
 func Signup(c *gin.Context) {
 
 	const op = "auth.signup"
@@ -118,7 +112,7 @@ func Signup(c *gin.Context) {
 	var user storage.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(400, gin.H{"error": err.Error(), "from": op})
 		return
 	}
 
@@ -128,13 +122,83 @@ func Signup(c *gin.Context) {
 
 	existingUser, err := db.IsUserByEmail(user.Email)
 
+	if existingUser.ID != 0 {
+		c.JSON(400, gin.H{"error": "user already exists", "from": op})
+		return
+	}
+
+	if user.Email == "" {
+		c.JSON(400, gin.H{"error": "email isn't set", "from": op})
+		return
+	}
+
+	var errHash error
+	user.Password, errHash = GenerateHashPassword(user.Password)
+
+	if errHash != nil {
+		c.JSON(500, gin.H{"error": "could not generate password hash", "from": op})
+		return
+	}
+
+	// set time
+	t := time.Now()
+	t.Format("2006-01-02 15:04:05")
+	user.Created = t
+
+	err = db.SetStructUsers(user)
+
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error(), "from": op})
 		return
 	}
 
-	if existingUser.ID != 0 {
-		c.JSON(400, gin.H{"error": "user already exists"})
+	c.JSON(200, gin.H{"success": "user created", "from": op})
+}
+
+func IsAuthorized() gin.HandlerFunc {
+
+	const op = "auth.is-authorized"
+	return func(c *gin.Context) {
+		cookie, err := c.Cookie("token")
+
+		if err != nil {
+			c.JSON(401, gin.H{"error": "unauthorized", "from": op})
+			c.Abort()
+			return
+		}
+
+		_, err = ParseToken(cookie)
+
+		if err != nil {
+			c.JSON(401, gin.H{"error": "unauthorized", "from": op})
+			c.Abort()
+			return
+		}
+
+		c.Next()
+	}
+}
+
+/* TODO: add email notifications */
+
+func ResetPassword(c *gin.Context) {
+
+	const op = "auth.reset-password"
+	var user storage.User
+
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	//set storage
+	var existingUser storage.User
+	var db *storage.Storage = storage.StoragePSQL
+
+	existingUser, err := db.IsUserByEmail(user.Email)
+
+	if existingUser.ID == 0 || err != nil {
+		c.JSON(400, gin.H{"error": "user does not exist", "from": op})
 		return
 	}
 
@@ -146,36 +210,55 @@ func Signup(c *gin.Context) {
 		return
 	}
 
-	err = db.SetStructUsers(user)
+	err = db.UsersUpdatePassword(existingUser.ID, user.Password)
 
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error(), "from": op})
 		return
 	}
 
-	c.JSON(200, gin.H{"success": "user created"})
+	c.JSON(200, gin.H{"success": "password updated"})
 }
 
-func IsAuthorized() gin.HandlerFunc {
+/* TODO: add email notifications */
 
-	const op = "auth.isauthorized"
-	return func(c *gin.Context) {
-		cookie, err := c.Cookie("token")
+func ResetEmail(c *gin.Context) {
 
-		if err != nil {
-			c.JSON(401, gin.H{"error": "unauthorized"})
-			c.Abort()
-			return
-		}
+	const op = "auth.reset-email"
+	var user storage.User
 
-		_, err = ParseToken(cookie)
-
-		if err != nil {
-			c.JSON(401, gin.H{"error": "unauthorized"})
-			c.Abort()
-			return
-		}
-
-		c.Next()
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
 	}
+
+	//set storage
+	var existingUser storage.User
+	var db *storage.Storage = storage.StoragePSQL
+
+	existingUser, err := db.IsUserByPhone(user.Phone)
+
+	if existingUser.ID == 0 || err != nil {
+		c.JSON(400, gin.H{"error": "user does not exist", "from": op})
+		return
+	}
+
+	if user.Email == "" {
+		c.JSON(400, gin.H{"error": "email isn't set", "from": op})
+		return
+	}
+
+	if user.Email == existingUser.Email {
+		c.JSON(400, gin.H{"error": "new email is using. nothing to update", "from": op})
+		return
+	}
+
+	err = db.UsersUpdateEmail(existingUser.ID, user.Email)
+
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error(), "from": op})
+		return
+	}
+
+	c.JSON(200, gin.H{"success": "email updated"})
 }

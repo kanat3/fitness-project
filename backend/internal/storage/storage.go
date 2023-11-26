@@ -214,7 +214,6 @@ func (s *Storage) SetStructUsers(user User) error {
 	const op = "storage.SetStructUsers"
 
 	query := "INSERT INTO users (first_name, second_name, last_name, phone, email, profile_img, created, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
-
 	_, err := s.db.Exec(query, user.FirstName, user.SecondName, user.LastName, user.Phone, user.Email, user.ProfileImg, user.Created, user.Password)
 	if err != nil {
 		return fmt.Errorf("%s: %w", op, err)
@@ -694,13 +693,58 @@ func (s *Storage) IsUserByEmail(email string) (User, error) {
 
 	const op = "storage.IsUserByEmail"
 
-	query := "SELECT id_users, email, password FROM users WHERE email = '%s' LIMIT 1"
+	query := "SELECT id_users, phone, email, password FROM users WHERE email = '%s' LIMIT 1"
 
 	var user User
-	err := s.db.QueryRow(fmt.Sprintf(query, email)).Scan(&user.ID, &user.Email, &user.Password)
+	err := s.db.QueryRow(fmt.Sprintf(query, email)).Scan(&user.ID, &user.Phone, &user.Email, &user.Password)
 	if err != nil {
 		return user, err
 	}
 
 	return user, nil
+}
+
+func (s *Storage) IsUserByPhone(phone string) (User, error) {
+
+	const op = "storage.IsUserByPhone"
+
+	query := "SELECT id_users, email, phone, password FROM users WHERE phone = '%s' LIMIT 1"
+
+	var user User
+	err := s.db.QueryRow(fmt.Sprintf(query, phone)).Scan(&user.ID, &user.Email, &user.Phone, &user.Password)
+	if err != nil {
+		return user, err
+	}
+
+	return user, nil
+}
+
+// updates
+
+func (s *Storage) UsersUpdatePassword(id int, update string) error {
+
+	const op = "storage.UsersUpdatePassword"
+
+	query := (fmt.Sprintf("UPDATE users SET password = '%s' WHERE id_users = %d;", update, id))
+
+	_, err := s.db.Query(query)
+	if err != nil {
+		return fmt.Errorf("%s: %w", op, err)
+	}
+
+	return nil
+}
+
+func (s *Storage) UsersUpdateEmail(id int, update string) error {
+
+	const op = "storage.UsersUpdateEmail"
+
+	query := (fmt.Sprintf("UPDATE users SET email = '%s' WHERE id_users = %d;", update, id))
+
+	_, err := s.db.Query(query)
+	if err != nil {
+		return fmt.Errorf("%s: %w", op, err)
+	}
+
+	return nil
 }

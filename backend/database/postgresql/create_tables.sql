@@ -3,8 +3,8 @@ create table if not exists users (
     first_name varchar(25) not null,
     second_name varchar(25) not null,
     last_name varchar(25) not null,
-    phone varchar(20) check (phone ~ '^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$'),
-    email varchar(254) not null,
+    phone varchar(20) check (phone ~ '^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$') not null UNIQUE,
+    email varchar(254) not null UNIQUE,
     profile_img varchar(400),
     created timestamp not null,
     password varchar(120) not null
@@ -55,7 +55,7 @@ create table if not exists coach (
     first_name varchar(25) not null,
     second_name varchar(25) not null,
     last_name varchar(25) not null,
-    email varchar(254) not null,
+    email varchar(254) not null UNIQUE,
     profile_img varchar(400),
     created timestamp not null
 );
@@ -112,7 +112,7 @@ create table if not exists centers (
     id_centers serial primary key,
     name varchar(40) not null,
     address varchar(100) not null,
-    phone varchar(20) check (phone ~ '^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$')
+    phone varchar(20) check (phone ~ '^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$') not null
 );
 
 create table if not exists centers_list (
