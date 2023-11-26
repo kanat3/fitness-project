@@ -16,7 +16,7 @@
 !*.yaml
 !*.sql
 !backend/*
-!frontend/*
+# !frontend/*
 # default .exe file of backend
 backend/backend
 # docker cache
