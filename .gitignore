@@ -17,6 +17,7 @@
 !*.sql
 !backend/*
 !frontend/*
+backend/static
 # default .exe file of backend
 backend/backend
 # docker cache
