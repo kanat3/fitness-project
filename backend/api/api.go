@@ -7,9 +7,6 @@ import (
 )
 
 func InitHandlers(r *gin.Engine) {
-	// test html
-	//r.LoadHTMLFiles("static/login.html")
-	//r.Static("static/css", "./static/css")
 
 	r.POST("/login", middleware.Login)
 	r.POST("/signup", middleware.Signup)
@@ -20,6 +17,18 @@ func InitHandlers(r *gin.Engine) {
 	r.GET("/status", Status)
 	r.GET("/login", Login)
 	r.GET("/signup", Signup)
+
+	/* add front */
+	r.LoadHTMLGlob("static/*.html")
+	r.Static("assets/css", "./assets/css")
+	r.Static("/assets/js", "./assets/js")
+
+	r.GET("/about", About)
+	r.GET("/trainers", Trainers)
+	r.GET("/contacts", Contacts)
+	/* TODO:add by id */
+	r.GET("/account", Account)
+	r.GET("/home", Home)
 }
 
 func Status(c *gin.Context) {
@@ -37,4 +46,24 @@ func Login(c *gin.Context) {
 func Signup(c *gin.Context) {
 	c.JSON(200, gin.H{"status": "test GET"})
 	//c.HTML(200, "signup.html", nil)
+}
+
+func About(c *gin.Context) {
+	c.HTML(200, "about_us.html", nil)
+}
+
+func Contacts(c *gin.Context) {
+	c.HTML(200, "contacts.html", nil)
+}
+
+func Account(c *gin.Context) {
+	c.HTML(200, "personal_account.html", nil)
+}
+
+func Trainers(c *gin.Context) {
+	c.HTML(200, "trainers.html", nil)
+}
+
+func Home(c *gin.Context) {
+	c.HTML(200, "index.html", nil)
 }
