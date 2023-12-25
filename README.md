@@ -19,17 +19,22 @@
 
 ## Backend installation
 
-> Note: project isn't ready for building
-
-Set environments
+Just do it
 ```
-export CONFIG_PATH=config/local.yaml
+make all
 ```
-Up database. You can connect to db using 5432 port
+Up database using Docker. You can connect to db using 5432 port. Check config/local,yaml for more info
+You may need sudo
 ```
-cd backend/database || docker-compose up --build -d
+cd ./backend/database || docker-compose up --build -d
 ```
 Run code
 ```
-cd backend || go run .
+cd ./backend
+./backend
+```
+You can compile backend faster. Just use it from ./backend:
+```
+chmod +x up.sh
+./up.sh
 ```
