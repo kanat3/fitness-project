@@ -1,3 +1,3 @@
-!/bin/bash
+#!/bin/bash
 
 cd ../ && make all && cd ./backend

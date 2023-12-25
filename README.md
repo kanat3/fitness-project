@@ -24,7 +24,6 @@ Just do it
 make all
 ```
 Up database using Docker. You can connect to db using 5432 port. Check config/local,yaml for more info
-You may need sudo
 ```
 cd ./backend/database || docker-compose up --build -d
 ```
