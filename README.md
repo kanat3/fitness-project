@@ -17,11 +17,12 @@
 - [Docker] - version 24.0.5
 - [Docker-Compose] - version 1.29.2
 
-## Backend installation
+## Installation
 1. Use docker-compose:
 ```
 make all-compose
 ```
+## Other targets for installation
 2. If database in docker-compose and project in Dockerfile:
 ```
 make docker
