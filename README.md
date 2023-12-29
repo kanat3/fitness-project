@@ -19,7 +19,23 @@
 
 ## Backend installation
 
-Just do it
+If all in docker container:
+```
+make docker
+```
+It creates project/ directory to use as volume in container
+So if you want to kill containers and delete all trash (like project/) 
+```
+make clean
+```
+If you changed only backend/frontend code then don't use 'make docker' again (it will remove all your containers)
+Just use
+```
+make update
+```
+It saves your container with database
+
+If local:
 ```
 make all
 ```
