@@ -53,6 +53,10 @@ volume:
 	cd $(current_path)
 	mkdir -p $(current_path)/project
 	cp -r $(current_path)/backend $(current_path)/project
+
+	# set config for container
+	cd $(current_path)/project/backend/config && sed -i 's/host: "local"/host: "fitness_db"/g' local.yaml
+	
 	cp -r $(current_path)/frontend $(current_path)/project
 	cp $(current_path)/go.mod $(current_path)/project
 	cp -r $(current_path)/go.sum $(current_path)/project
@@ -70,10 +74,15 @@ docker: clean
 	cp -r $(current_path)/Makefile $(current_path)/project
 	cp -r $(current_path)/scripts $(current_path)/project
 
-	cd $(current_path)/backend/database && sudo docker-compose up --build -d
-	sudo docker build -t fitness-project:latest .
-	# healthcheck
+	# set config for docker-container
+	cd $(current_path)/project/backend/config && sed -i 's/host: "local"/host: "fitness_db"/g' local.yaml
 
+	cd $(current_path)/backend/database && sudo docker-compose up --build -d
+	cd $(current_path)/scripts && sudo docker build -t fitness-project:latest .
+	cd $(current_path)
+	# need healthcheck. use bad solution
+	sleep 120
+	# try to connect. if database isn't ready need to recreate fitness-project
 	sudo docker run -p 8080:8080  -v ./project:/etc/project -P --name fitness-project --link fitness_db:fitness_db --net database_default fitness-project:latest
 	sudo rm -rf $(current_path)/project
 
