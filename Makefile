@@ -2,6 +2,7 @@ current_path=$(shell pwd)
 SHELL := /bin/bash
 
 front: clean
+
 	if [ ! -d "$(current_path)/backend/static" ]; then \
 		mkdir -p "$(current_path)/backend/static"; \
 	fi
@@ -19,7 +20,7 @@ front: clean
 
 	cp -r $(current_path)/frontend/assets $(current_path)/backend
 
-all: clean front
+all-local: clean front
 	cd $(current_path)/backend && go build
 
 docker-down:
@@ -56,7 +57,7 @@ volume:
 
 	# set config for container
 	cd $(current_path)/project/backend/config && sed -i 's/host: "local"/host: "fitness_db"/g' local.yaml
-	
+
 	cp -r $(current_path)/frontend $(current_path)/project
 	cp $(current_path)/go.mod $(current_path)/project
 	cp -r $(current_path)/go.sum $(current_path)/project
@@ -64,6 +65,7 @@ volume:
 	cp -r $(current_path)/scripts $(current_path)/project
 
 docker: clean
+
 	echo "y" | sudo docker image prune -a
 	cd $(current_path)
 	mkdir -p $(current_path)/project
@@ -87,7 +89,12 @@ docker: clean
 	sudo rm -rf $(current_path)/project
 
 update:
+
 	source ./scripts/service-down.sh
 
 	make volume
 	sudo docker run -p 8080:8080 -v ./project:/etc/project -P --name fitness-project --link fitness_db:fitness_db --net database_default fitness-project:latest
+
+all-compose: clean volume
+	cd $(current_path)/project
+	sudo docker-compose up --build

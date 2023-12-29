@@ -18,26 +18,29 @@
 - [Docker-Compose] - version 1.29.2
 
 ## Backend installation
-
-If all in docker container:
+1. Use docker-compose:
+```
+make all-compose
+```
+2. If database in docker-compose and project in Dockerfile:
 ```
 make docker
 ```
-It creates project/ directory to use as volume in container
+It creates project/ directory to use as volume in container.
 So if you want to kill containers and delete all trash (like project/) 
 ```
 make clean
 ```
-If you changed only backend/frontend code then don't use 'make docker' again (it will remove all your containers)
+If you changed only backend/frontend code then don't use 'make docker' again (it will remove all your containers).
 Just use
 ```
 make update
 ```
 It saves your container with database
 
-If local:
+3. If local:
 ```
-make all
+make all-local
 ```
 Up database using Docker. You can connect to db using 5432 port. Check config/local,yaml for more info
 ```

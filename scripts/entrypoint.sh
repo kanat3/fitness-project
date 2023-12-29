@@ -3,7 +3,7 @@
 cd /etc/project
 
 cd /etc/project/
-make all
+make all-local
 
 cd /etc/project/backend
 ./backend
