@@ -18,9 +18,11 @@
 !backend/*
 !frontend/*
 backend/static
+backend/assets
 # default .exe file of backend
 backend/backend
 # docker cache
 backend/database/cache
 # Go workspace file
 go.work
+project/

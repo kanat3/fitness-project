@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  postgresql_db:
+    container_name: fitness_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=anna
+    image: postgres:15.2-alpine
+    restart: always
+    volumes:
+      - ./backend/database/cache/postgres-data/data:/var/lib/postgresql/data
+      - ./backend/database/postgresql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    networks:
+      - fitness
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U anna -d anna"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
+  project:
+    container_name: fitness-project
+    ports:
+      - 8080:8080
+    build:
+      context: ./scripts
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./project:/etc/project
+    links:
+      - "postgresql_db:postgresql_db"
+    networks:
+      - fitness
+    depends_on:
+        postgresql_db:
+          condition: service_healthy
+
+networks:
+  fitness:
+    name: fitness_default
+    driver: bridge

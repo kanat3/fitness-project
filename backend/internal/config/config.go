@@ -29,7 +29,10 @@ type HTTPServer struct {
 }
 
 func GetConfig() *Config {
-	configPath := os.Getenv("CONFIG_PATH")
+	/* not implemented in makefile */
+	//configPath := os.Getenv("CONFIG_PATH")
+
+	configPath := "config/local.yaml"
 
 	if configPath == "" {
 		log.Fatal("Env $CONFIG_PATH isn't set")
