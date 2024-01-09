@@ -1,7 +1,7 @@
 ## Features
 
 > `Vera`
-- Add a frontend (ok)
+- Add a frontend
 
 > `Anna`
 - Add triggers for the database
@@ -18,6 +18,7 @@
 - [Docker-Compose] - version 1.29.2
 
 ## Installation
+> 'You may need <sudo>'
 1. Use docker-compose:
 ```
 make all-compose

@@ -4,7 +4,7 @@ http_server:
   timeout: 4s
   middle_timeout: 60s
 database:
-  host: "local"
+  host: "localhost"
   port: "5432"
   user: "anna"
   password: "root"

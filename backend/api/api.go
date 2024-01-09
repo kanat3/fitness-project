@@ -20,15 +20,20 @@ func InitHandlers(r *gin.Engine) {
 
 	/* add front */
 	r.LoadHTMLGlob("static/*.html")
-	r.Static("assets/css", "./assets/css")
-	r.Static("/assets/js", "./assets/js")
+	r.Static("static/assets/css", "./static/assets/css")
+	r.Static("static/assets/js", "./static/assets/js")
 
 	r.GET("/about", About)
 	r.GET("/trainers", Trainers)
 	r.GET("/contacts", Contacts)
-	/* TODO:add by id */
 	r.GET("/account", Account)
 	r.GET("/home", Home)
+	/*
+		r.POST("/test", middleware.IsAuthorized(), func(c *gin.Context) {
+			c.JSON(200, gin.H{"message": "Test request created"})
+		})
+	*/
+
 }
 
 func Status(c *gin.Context) {

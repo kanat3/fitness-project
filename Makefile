@@ -1,26 +1,25 @@
 current_path=$(shell pwd)
 SHELL := /bin/bash
 
-front: clean
+front:
+
+	if [ -d "$(current_path)/backend/static" ]; then \
+		sudo rm -rf "$(current_path)/backend/static"; \
+	fi
 
 	if [ ! -d "$(current_path)/backend/static" ]; then \
 		mkdir -p "$(current_path)/backend/static"; \
 	fi
 	
-	cp $(current_path)/frontend/*.html $(current_path)/backend/static/
-	
-	# bad path stucture
+	# bad path stucture, copy all files in frontend/
 	####
-	cp $(current_path)/frontend/*.jpg $(current_path)/backend/static/
+	cp -r $(current_path)/frontend/* $(current_path)/backend/static/
 	####
-
-	if [ ! -d "$(current_path)/backend/assets" ]; then \
-		mkdir -p "$(current_path)/backend/assets"; \
-	fi
-
-	cp -r $(current_path)/frontend/assets $(current_path)/backend
 
 all-local: clean front
+	cd $(current_path)/backend && go build
+
+all-in-container: front
 	cd $(current_path)/backend && go build
 
 docker-down:
@@ -31,6 +30,10 @@ service-down:
 
 service-up: clean front
 	cd ${current_path}/backend && go build
+
+database-up:
+	cd ${current_path}/backend/database && sudo docker-compose up --build -d
+
 clean: docker-down
 
 	if [ -d "$(current_path)/backend/database/cache" ]; then \
@@ -39,10 +42,6 @@ clean: docker-down
 
 	if [ -d "$(current_path)/backend/static" ]; then \
 		sudo rm -rf "$(current_path)/backend/static"; \
-	fi
-
-	if [ -d "$(current_path)/backend/assets" ]; then \
-		sudo rm -rf "$(current_path)/backend/assets"; \
 	fi
 
 	if [ -d "$(current_path)/project" ]; then \
@@ -101,5 +100,6 @@ update:
 	sudo docker run -p 8080:8080 -v ./project:/etc/project -P --name fitness-project --link fitness_db:fitness_db --net database_default fitness-project:latest
 
 all-compose: clean volume
+
 	cd $(current_path)/project
 	sudo docker-compose up --build
