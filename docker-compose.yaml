@@ -35,9 +35,8 @@ services:
       - "postgresql_db:postgresql_db"
     networks:
       - fitness
-    depends_on:
-        postgresql_db:
-          condition: service_healthy
+    depends_on: 
+      - postgresql_db
 
 networks:
   fitness:

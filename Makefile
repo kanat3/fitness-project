@@ -26,6 +26,11 @@ all-local: clean front
 docker-down:
 	source ./scripts/all-down.sh
 
+service-down:
+	source ./scripts/service-down.sh
+
+service-up: clean front
+	cd ${current_path}/backend && go build
 clean: docker-down
 
 	if [ -d "$(current_path)/backend/database/cache" ]; then \

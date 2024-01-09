@@ -1,5 +1,52 @@
 <!DOCTYPE html>
-   <html lang="en">
+<html lang="en">
+
+<style>
+.cont {
+    position: relative;
+    width: 50%; /* Maximum width */
+    margin: 0 auto; /* Center it */
+}
+
+.cont .content {
+    position: absolute; /* Position the background text */
+    left: -420px;
+    bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+    background: rgba(0, 0, 0, 0); /* Black background with 0.5 opacity */
+    color: #000000; /* Grey text */
+    width: 200%; /* Full width */
+    padding: 600px; /* Some padding */
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+img {
+  width: 50%;
+}
+.overlay {
+  position: absolute; 
+  bottom: 0; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1; 
+  width: 100%;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+</style>
+
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,9 +83,12 @@
                      <a href="contacts.html" class="nav__link">Contacts</a>
                   </li>
 
-    
                   <li class="nav__item">
                      <a href="personal_account.html" class="nav__link">Personal Account</a>
+                  </li>
+
+                  <li class="nav__item">
+                     <a href="reg.html" class="nav__link">Registration</a>
                   </li>
                </ul>
 
@@ -75,8 +125,8 @@
 
       <!--==================== LOGIN ====================-->
       <div class="login" id="login">
-      <!--   <form action="personal_account.html" class="login__form">    -->
-            <form action="" class="login__form">
+         <form action="personal_account.html" class="login__form">
+      <!--   <form action="" class="login__form"> -->
             <h2 class="login__title">Log In</h2>
             
             <div class="login__group">
@@ -93,7 +143,7 @@
 
             <div>
                <p class="login__signup">
-                  You do not have an account? <a href="#">Sign up</a>
+                  You do not have an account? <a href="reg.html">Sign up</a>
                </p>
    
                <a href="#" class="login__forgot">
@@ -107,10 +157,44 @@
          <i class="ri-close-line login__close" id="login-close"></i>
       </div>
 
+
+<!-- <div class="wrapper">
+  <img src="trener1.jpg" alt="">
+  
+  <img src="trener2.jpg" alt="">
+</div> -->
+
+<div class="wrapper">
+  <img src="trener1.jpg" alt="">
+  <div class="cont">
+     <div class="content">
+    <h1>Анна Кучебо</h1>
+    <p>Опытный профессионал, увлеченный фитнесом и здоровым образом жизни. Обладает обширными знаниями в области тренировок, питания и здорового образа жизни. Наш тренер готов помочь вам достичь ваших фитнес-целей, разработав индивидуальные тренировочные программы, предоставив ценные советы по питанию и мотивируя вас к достижению лучших результатов. Благодаря его профессионализму и внимательному отношению к каждому клиенту, вы сможете насладиться эффективной тренировкой и достичь своих фитнес-целей под его руководством.</p>
+  </div>
+  </div>
+
+</div>
+<div class="wrapper">
+  <img src="trener2.jpg" alt="">
+  <div class="cont">
+     <div class="content">
+    <h1>Вера Федотова</h1>
+    <p>Высококвалифицированный специалист в области йоги и растяжки с особым уклоном в практику растяжки. Тренер готов помочь вам раскрыть свой потенциал скрытой гибкости и силы через индивидуальные программы растяжки, нацеленные на укрепление тела, повышение подвижности и достижение внутреннего равновесия. Благодаря его экспертизе и заботливому отношению к каждому ученику, вы сможете погрузиться в мир растяжки, улучшить свою гибкость и обрести еще большее чувство комфорта и баланса под его руководством.</p>
+  </div>
+  </div>
+
+</div>
+
+<!-- <div style="background-color: rgba(255, 0, 0, 0.5);">
+
+<p>Это текст с прозрачным фоном.</p>
+
+</div> -->
+
       <!--==================== MAIN ====================-->
-      <main class="main">
-         <img src="/home/vera/inst/responsive-navbar-with-search-and-login/capi.jpg" alt="image" class="main__bg">
-      </main> 
+  <!--    <main class="main">
+    <!--     <img src="/home/vera/inst/responsive-navbar-with-search-and-login/capi.jpg" alt="image" class="main__bg"> -->
+   <!--   </main> -->
       <!--=============== MAIN JS ===============-->
       <script src="assets/js/main.js"></script>
    </body>

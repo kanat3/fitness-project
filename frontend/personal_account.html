@@ -1,4 +1,232 @@
 <!DOCTYPE html>
+
+
+<html>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50; /* кнопка регистрации зеленая */
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    padding: 14px 20px;
+    background-color: #f44336; /* кнопка закрытия красная */
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+    padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #474e5d;
+    padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: ##F5FFFA; /* ТУТ ВНЕШНЯЯ ОБОЛОЧКА */
+    margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+ 
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+    .cancelbtn, .signupbtn {
+       width: 100%;
+    }
+}
+/* отсюда начинается поиск напарника!*/
+.container2 {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container2 input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container2:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container2 input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container2 input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container2 .checkmark:after {
+   top: 9px;
+   left: 9px;
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   background: white;
+}background: white;
+}
+
+
+/* здесь заканчивается поиск напарника!*/
+
+/* сам поиск напарника */
+.btn {
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+}
+.default {
+    color: black;
+}
+
+.default:hover {
+    background: #e7e7e7;
+}
+
+/* Green */
+.success {
+    color: green;
+}
+
+.success:hover {
+    background-color: #4CAF50;
+    color: white;
+    content: attr(hover-text);
+}
+
+
+/* Red */
+.danger {
+    color: red;
+}
+
+.danger:hover {
+    background: #f44336;
+    color: white;
+}
+
+</style>
+
+
+
+
+
+
+
+
    <html lang="en">
    <head>
       <meta charset="UTF-8">
@@ -39,6 +267,10 @@
                   <li class="nav__item">
                      <a href="personal_account.html" class="nav__link">Personal Account</a>
                   </li>
+
+                   <li class="nav__item">
+                     <a href="reg.html" class="nav__link">Registration</a>
+                  </li>
                </ul>
 
                <!-- Close button -->
@@ -74,7 +306,8 @@
 
       <!--==================== LOGIN ====================-->
       <div class="login" id="login">
-         <form action="" class="login__form">
+         <form action="personal_account.html" class="login__form">
+      <!--   <form action="" class="login__form"> -->
             <h2 class="login__title">Log In</h2>
             
             <div class="login__group">
@@ -91,7 +324,7 @@
 
             <div>
                <p class="login__signup">
-                  You do not have an account? <a href="#">Sign up</a>
+                  You do not have an account? <a href="reg.html">Sign up</a>
                </p>
    
                <a href="#" class="login__forgot">
@@ -105,9 +338,121 @@
          <i class="ri-close-line login__close" id="login-close"></i>
       </div>
 
+  <form class="modal-content" action="personal_account.html">
+    <div class="container">
+      <h1>ФИО</h1>
+      <p>Иванов Иван Иванович</p>
+      <hr>
+      <h1>Почта</h1>
+      <p>ivan_ivanov_iv@mail.ru</p>
+      <hr>
+      <h1>Номер телефона</h1>
+      <p>+7(999)999-99-99</p>
+      <hr>
+    </div>
+  </form>
+
+   <div class="container">
+   <h1>ПОИСК НАПАРНИКА</h1>
+   <p>Какая Ваша цель в зале?</p>
+   <label class="container2">Похудеть
+     <input type="radio" checked="checked" name="radio">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">Накачать руки
+     <input type="radio" name="radio">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">Накачать ноги
+     <input type="radio" name="radio">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">Накачать ягодицы
+     <input type="radio" name="radio">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">Укрепить спину
+     <input type="radio" name="radio">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">Укрепить мышцы кора
+     <input type="radio" name="radio">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">Набрать вес
+     <input type="radio" name="radio">
+     <span class="checkmark"></span>
+   </label>
+
+   <p>Пол напарника:</p>
+   <label class="container2">Женский
+     <input type="radio" checked="checked" name="radio1">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">Мужской
+     <input type="radio" name="radio1">
+     <span class="checkmark"></span>
+   </label>
+
+   <p>Место проведения:</p>
+   <label class="container2">Каширское ш., 31
+     <input type="radio" checked="checked" name="radio2">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">ул. Москворечье 2к2
+     <input type="radio" name="radio2">
+     <span class="checkmark"></span>
+   </label>   
+
+   <p>Время занятия:</p>
+   <label class="container2">8:00 - 13:00
+     <input type="radio" checked="checked" name="radio3">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">13:00 - 18:00
+     <input type="radio" name="radio3">
+     <span class="checkmark"></span>
+   </label>   
+   <label class="container2">18:00 - 24:00
+     <input type="radio" name="radio3">
+     <span class="checkmark"></span>
+   </label>
+
+   <h2>МОЙ ПОИСК</h2>  
+   <button class="btn default">RUN</button> 
+ <!--  <button class="btn success">danya_sidorov@mail.ru</button> -->
+   <button class="some-class" id="button" data-trigger="false" data-text="Принять">Принять</button>
+   <button class="btn danger">Отказать</button> 
+   <div style="display:none;" id="menu" class="some-class"</div>
+   </div>
+</div>
+
+   <div class="container">
+   <h1>ПЛАН ПИТАНИЯ</h1>
+   <p>Какая Ваша цель в зале?</p>
+   <label class="container2">Похудеть
+     <input type="radio" checked="checked" name="radio4">
+     <span class="checkmark"></span>
+   </label>
+   <label class="container2">Набрать массу
+     <input type="radio" name="radio4">
+     <span class="checkmark"></span>
+   </label>
+   </div>
+
+   <button class="some-class2" id="button2" data-trigger="false" data-text="Сгенерировать план питания!">Открыть меню</button>
+   <div style="display:none;" id="menu2" class="some-class2"</div>
+</div>
+
+
+
+
       <!--==================== MAIN ====================-->
       <main class="main">
-         <img src="/home/vera/inst/responsive-navbar-with-search-and-login/crolic.jpg" alt="image" class="main__bg">
+         <div "class="main__bg">
+             <h7 "class="main__bg">Log In</h2>
+         </div>
+          <img src="/home/vera/inst/responsive-navbar-with-search-and-login/crolic.jpg" alt="image" class="main__bg">
       </main> 
       <!--=============== MAIN JS ===============-->
       <script src="assets/js/main.js"></script>

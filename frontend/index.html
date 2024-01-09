@@ -11,6 +11,158 @@
       <link rel="stylesheet" href="assets/css/styles.css">
 
       <title>Responsive navbar with search and login - Bedimcode</title>
+
+    <style>
+      .btn {
+         display: inline-block;
+         background: #000080;
+         color: #fff;
+         padding: 1rem 1.5rem;
+         text-decoration: none;
+         border-radius: 3px;
+
+         text-align: center;
+         width: 310px;
+         margin-bottom: 50px;
+         margin-top: 50px;
+      }
+
+      .slideshow {
+         width: 100%;
+         height: 900px;
+         position: relative;
+         overflow: hidden;
+         background: #000;
+         margin: 20px 0;
+         margin-top: 50px;
+      }
+      .slideshow-item {
+         width: 100%;
+         height: 100%;
+         position: absolute;
+         opacity: 0;
+         animation: slideanim 40s infinite;
+      }
+      .slideshow-item:nth-child(1),
+      .slideshow-item:nth-child(1) img {
+         animation-delay: 0;
+      }
+      .slideshow-item:nth-child(2),
+      .slideshow-item:nth-child(2) img {
+         animation-delay: 10s;
+      }
+      .slideshow-item:nth-child(3),
+      .slideshow-item:nth-child(3) img {
+         animation-delay: 20s;
+      }
+      .slideshow-item:nth-child(4),
+      .slideshow-item:nth-child(4) img {
+         animation-delay: 30s;
+      }
+      .slideshow-item img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         animation: zoom 40s infinite;
+      }
+      .slideshow-item-text {
+         max-width: 50%;
+         position: absolute;
+         bottom: 20px;
+         left: 20px;
+            background-color: rgba(0,0,0,0.7);
+            color: #fff;
+         padding: 20px 30px;
+         font-family: Verdana, sans-serif;      
+      }
+      .slideshow-item-text h5 {
+         font-size: 22px;
+         margin: 0 0 10px 0;
+         color: #BFE2FF;
+      }
+      .slideshow-item-text p {
+         font-size: 15px;
+         margin-bottom: 10px;
+      }
+      @keyframes slideanim {
+         12.5%{
+            opacity: 1;
+         }
+            25%{
+            opacity: 1;
+         }   
+         37.5%{
+            opacity: 0;
+         }
+      }  
+      @keyframes zoom {
+         50%{
+            transform: scale(1.3);
+            }   
+      }
+      @media screen and (max-width: 1100px){
+         .slideshow-item-text{
+            max-width: 75%;
+         }
+      }
+      @media screen and (max-width: 456px){
+         .slideshow-item-text {
+            bottom: 0;
+            left: 0;
+            max-width: 100%;
+         }
+         .slideshow-item-text h5 {
+            font-size: 18px;
+         }
+         .slideshow-item-text p {
+            font-size: 13px;
+         }
+      }  
+      .button {
+         border-radius: 4px;
+         background-color: #000080;
+         border: none;
+         color: #FFFFFF;
+         text-align: center;
+         font-size: 20px;
+         padding: 20px;
+         width: 500px;
+         transition: all 0.5s;
+         cursor: pointer;
+         margin: 5px;
+      }
+
+      .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+        margin-top: 50px;
+        width: 300px;
+      }
+
+      .button span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+      }
+
+      .button:hover span {
+        padding-right: 25px;
+      }
+
+      .button:hover span:after {
+        opacity: 1;
+        right: 0;
+      }
+    </style>
+
+
+
+
    </head>
    <body>
       <!--==================== HEADER ====================-->
@@ -40,6 +192,10 @@
                   <li class="nav__item">
                      <a href="personal_account.html" class="nav__link">Personal Account</a>
                   </li>
+
+                  <li class="nav__item">
+                     <a href="reg.html" class="nav__link">Registration</a>
+                  </li>                  
                </ul>
 
                <!-- Close button -->
@@ -75,8 +231,8 @@
 
       <!--==================== LOGIN ====================-->
       <div class="login" id="login">
-      <!--   <form action="personal_account.html" class="login__form">    -->
-            <form action="" class="login__form">
+         <form action="personal_account.html" class="login__form">
+      <!--   <form action="" class="login__form"> -->
             <h2 class="login__title">Log In</h2>
             
             <div class="login__group">
@@ -93,13 +249,12 @@
 
             <div>
                <p class="login__signup">
-               You do not have an account? <a href="#">Sign up</a>
-               <!--   You do not have an account? <a href="con.html">Sign up</a> -->
+                  You do not have an account? <a href="reg.html">Sign up</a>
                </p>
    
-               <a href="#" class="login__forgot">
+ <!--               <a href="#" class="login__forgot">
                   You forgot your password
-               </a>
+               </a> -->
    
                <button type="submit" class="login__button">Log In</button>
             </div>
@@ -108,9 +263,24 @@
          <i class="ri-close-line login__close" id="login-close"></i>
       </div>
 
+
       <!--==================== MAIN ====================-->
       <main class="main">
-         <img src="/home/vera/Документы/ПСП/images/gym4.webp" alt="image" class="main__bg">
+   <div class="slideshow">
+     <div class="slideshow-item">
+         <img src="gym1.jpg" alt="">
+       </div> 
+      <div class="slideshow-item">
+         <img src="gym2.jpg" alt="">
+      </div>
+      <div class="slideshow-item">
+         <img src="gym.jpg" alt="">
+      </div>  
+      <div class="slideshow-item">
+         <img src="gym5.jpg" alt="">
+      </div>          
+   </div>
+    <!--     <img src="/home/vera/Документы/ПСП/images/gym4.webp" alt="image" class="main__bg"> -->
       </main>
       
       <!--=============== MAIN JS ===============-->
