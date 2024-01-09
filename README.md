@@ -1,7 +1,7 @@
 ## Features
 
 > `Vera`
-- Add a frontend
+- Add a frontend (okay...)
 
 > `Anna`
 - Add triggers for the database
