@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"fitness-project/backend/internal/storage"
-	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -47,7 +46,6 @@ func ParseToken(tokenString string) (claims *Claims, err error) {
 func Login(c *gin.Context) {
 
 	const op = "auth.login"
-	fmt.Print("login")
 
 	var user storage.User
 

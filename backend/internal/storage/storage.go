@@ -693,10 +693,10 @@ func (s *Storage) IsUserByEmail(email string) (User, error) {
 
 	const op = "storage.IsUserByEmail"
 
-	query := "SELECT id_users, phone, email, password FROM users WHERE email = '%s' LIMIT 1"
+	query := "SELECT first_name, second_name, last_name, phone, email FROM users WHERE email = '%s' LIMIT 1"
 
 	var user User
-	err := s.db.QueryRow(fmt.Sprintf(query, email)).Scan(&user.ID, &user.Phone, &user.Email, &user.Password)
+	err := s.db.QueryRow(fmt.Sprintf(query, email)).Scan(&user.FirstName, &user.SecondName, &user.LastName, &user.Phone, &user.Email)
 	if err != nil {
 		return user, err
 	}

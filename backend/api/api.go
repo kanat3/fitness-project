@@ -12,17 +12,21 @@ func InitHandlers(r *gin.Engine) {
 	r.POST("/signup", middleware.Signup)
 	r.POST("/reset-password", middleware.ResetPassword)
 	r.POST("/reset-email", middleware.ResetEmail)
+	r.POST("/account", middleware.Account)
+	/* TODO: need another path */
+	r.POST("/account/bid", middleware.SetBid)
 
 	r.GET("/logout", middleware.Logout)
 	r.GET("/status", Status)
 	r.GET("/login", Login)
 	r.GET("/signup", Signup)
 
+	/* TODO: need another path */
+	r.GET("/account/bid", middleware.GetBid)
+
 	/* add front */
 	r.LoadHTMLGlob("frontend/*.html")
 	r.Static("frontend", "./frontend")
-	//	r.Static("frontend/assets/css", "./frontend/assets/css")
-	//	r.Static("frontend/assets/js", "./frontend/assets/js")
 
 	r.GET("/about", About)
 	r.GET("/trainers", Trainers)
