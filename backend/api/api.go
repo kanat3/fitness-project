@@ -19,20 +19,19 @@ func InitHandlers(r *gin.Engine) {
 	r.GET("/signup", Signup)
 
 	/* add front */
-	r.LoadHTMLGlob("static/*.html")
-	r.Static("static/assets/css", "./static/assets/css")
-	r.Static("static/assets/js", "./static/assets/js")
+	r.LoadHTMLGlob("frontend/*.html")
+	r.Static("frontend", "./frontend")
+	//	r.Static("frontend/assets/css", "./frontend/assets/css")
+	//	r.Static("frontend/assets/js", "./frontend/assets/js")
 
 	r.GET("/about", About)
 	r.GET("/trainers", Trainers)
 	r.GET("/contacts", Contacts)
 	r.GET("/account", Account)
 	r.GET("/home", Home)
-	/*
-		r.POST("/test", middleware.IsAuthorized(), func(c *gin.Context) {
-			c.JSON(200, gin.H{"message": "Test request created"})
-		})
-	*/
+	r.POST("/test", middleware.IsAuthorized(), func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "Test request created"})
+	})
 
 }
 
@@ -49,8 +48,7 @@ func Login(c *gin.Context) {
 
 /* TODO */
 func Signup(c *gin.Context) {
-	c.JSON(200, gin.H{"status": "test GET"})
-	//c.HTML(200, "signup.html", nil)
+	c.HTML(200, "reg.html", nil)
 }
 
 func About(c *gin.Context) {

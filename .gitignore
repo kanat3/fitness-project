@@ -19,6 +19,7 @@
 !frontend/*
 backend/static
 backend/assets
+backend/frontend
 # default .exe file of backend
 backend/backend
 # docker cache

@@ -3,17 +3,17 @@ SHELL := /bin/bash
 
 front:
 
-	if [ -d "$(current_path)/backend/static" ]; then \
-		sudo rm -rf "$(current_path)/backend/static"; \
+	if [ -d "$(current_path)/backend/frontend" ]; then \
+		sudo rm -rf "$(current_path)/backend/frontend"; \
 	fi
 
-	if [ ! -d "$(current_path)/backend/static" ]; then \
-		mkdir -p "$(current_path)/backend/static"; \
+	if [ ! -d "$(current_path)/backend/frontend" ]; then \
+		mkdir -p "$(current_path)/backend/frontend"; \
 	fi
-	
+
 	# bad path stucture, copy all files in frontend/
 	####
-	cp -r $(current_path)/frontend/* $(current_path)/backend/static/
+	cp -r $(current_path)/frontend/* $(current_path)/backend/frontend/
 	####
 
 all-local: clean front
@@ -40,8 +40,8 @@ clean: docker-down
 		sudo rm -rf "$(current_path)/backend/database/cache"; \
 	fi
 
-	if [ -d "$(current_path)/backend/static" ]; then \
-		sudo rm -rf "$(current_path)/backend/static"; \
+	if [ -d "$(current_path)/backend/frontend" ]; then \
+		sudo rm -rf "$(current_path)/backend/frontend"; \
 	fi
 
 	if [ -d "$(current_path)/project" ]; then \
@@ -49,7 +49,7 @@ clean: docker-down
 	fi
 
 volume:
-	
+
 	if [ -d "$(current_path)/backend/database/cache" ]; then \
 		sudo rm -rf "$(current_path)/backend/database/cache"; \
 	fi

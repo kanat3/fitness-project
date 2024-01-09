@@ -1,3 +1,5 @@
 #!/bin/bash
 
-go build && ./backend
+cd .. && make all-in-container
+cd ./backend && go build
+./backend
