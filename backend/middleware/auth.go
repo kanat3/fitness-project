@@ -177,8 +177,6 @@ func IsAuthorized() gin.HandlerFunc {
 	}
 }
 
-/* TODO: add email notifications */
-
 func ResetPassword(c *gin.Context) {
 
 	const op = "auth.reset-password"
@@ -217,8 +215,6 @@ func ResetPassword(c *gin.Context) {
 
 	c.JSON(200, gin.H{"success": "password updated"})
 }
-
-/* TODO: add email notifications */
 
 func ResetEmail(c *gin.Context) {
 

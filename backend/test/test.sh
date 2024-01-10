@@ -32,3 +32,6 @@ echo ""
 #test reset password - OK - test without jwt
 curl -i -X POST -H 'Content-Type: application/json' -b token=$token -d '{"email": "new-test@mail.ru", "password": "12334"}' http://localhost:8080/reset-password
 echo ""
+# test account - OK
+curl -i -X POST -H 'Content-Type: application/json' http://localhost:8080/account/99
+echo ""

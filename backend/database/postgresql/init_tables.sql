@@ -9,3 +9,15 @@ INSERT INTO workout_templates (workout) VALUES
     ('Кардио тренировка: бег 5 км; Занятия на тренажерах: подтягивания, отжимания'),
     ('Силовая тренировка: жим штанги, приседания; Кардио: велотренировка 30 мин'),
     ('Плавание 1 км, занятия по методике HIIT: высокоинтенсивные интервальные тренировки');
+
+INSERT INTO users (id_users, first_name, second_name, last_name, phone, email, profile_img, created, password)
+VALUES ( '99',
+  'Тестовый',
+  'Тест',
+  'Тестов',
+  '89751614387',
+  'test@mail.coom',
+  'https://example.com/profile_images/some-jpg.png',
+  CURRENT_TIMESTAMP,
+  'securepassword'
+);

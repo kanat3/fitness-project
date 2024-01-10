@@ -2,24 +2,29 @@ package middleware
 
 import (
 	"fitness-project/backend/internal/storage"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
+func getParam(c *gin.Context, paramName string) string {
+	return c.Params.ByName(paramName)
+}
+
 func Account(c *gin.Context) {
 
 	const op = "server.account"
-	var user storage.User
 
-	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(400, gin.H{"error": err.Error(), "from": op})
+	req := getParam(c, "Id")
+	id, err := strconv.Atoi(req)
+	if err != nil {
+		c.JSON(400, gin.H{"error": "params converting error", "from": op})
 		return
 	}
-
 	// set storage
 	var db *storage.Storage = storage.StoragePSQL
 
-	existingUser, err := db.IsUserByEmail(user.Email)
+	existingUser, err := db.IsUserByID(id)
 
 	if existingUser.ID == 0 {
 		c.JSON(400, gin.H{"error": "user does not exist", "from": op})

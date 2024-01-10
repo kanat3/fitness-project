@@ -12,8 +12,7 @@ func InitHandlers(r *gin.Engine) {
 	r.POST("/signup", middleware.Signup)
 	r.POST("/reset-password", middleware.IsAuthorized(), middleware.ResetPassword)
 	r.POST("/reset-email", middleware.ResetEmail)
-	r.POST("/account", middleware.Account)
-	/* TODO: need another path */
+	r.POST("/account/:Id", middleware.Account)
 	r.POST("/account/bid", middleware.SetBid)
 
 	r.GET("/logout", middleware.Logout)
@@ -21,10 +20,8 @@ func InitHandlers(r *gin.Engine) {
 	r.GET("/login", Login)
 	r.GET("/signup", Signup)
 
-	/* TODO: need another path */
 	r.GET("/account/bid", middleware.GetBid)
 
-	/* add front */
 	r.LoadHTMLGlob("frontend/*.html")
 	r.Static("frontend", "./frontend")
 
@@ -44,13 +41,10 @@ func Status(c *gin.Context) {
 	c.JSON(200, gin.H{"status": "ok", "from": op})
 }
 
-/* TODO */
 func Login(c *gin.Context) {
 	c.JSON(200, gin.H{"status": "test GET"})
-	//c.HTML(200, "login.html", nil)
 }
 
-/* TODO */
 func Signup(c *gin.Context) {
 	c.HTML(200, "reg.html", nil)
 }
