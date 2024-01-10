@@ -16,9 +16,12 @@ front:
 	cp -r $(current_path)/frontend/* $(current_path)/backend/frontend/
 	####
 
-all-local: clean front
+all-local: clean front database-up
+	# for database -> bad solution
+	sleep 30
 	cd $(current_path)/backend/config && sed -i 's/host: "fitness_db"/host: "localhost"/g' local.yaml
 	cd $(current_path)/backend && go build
+	cd $(current_path)/backend && ./backend
 
 all-in-container:
 	cd $(current_path)/backend && go build
