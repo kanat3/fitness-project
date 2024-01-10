@@ -6,26 +6,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type userData struct {
-	Email    string
-	Password string
-}
-
 func Account(c *gin.Context) {
 
 	const op = "server.account"
-	var userData userData
+	var user storage.User
 
-	if err := c.ShouldBindJSON(&userData); err != nil {
-		c.JSON(400, gin.H{"json error": err.Error(), "from": op})
-		c.JSON(400, gin.H{"data": userData})
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(400, gin.H{"error": err.Error(), "from": op})
 		return
 	}
 
 	// set storage
 	var db *storage.Storage = storage.StoragePSQL
 
-	existingUser, err := db.IsUserByEmail(userData.Email)
+	existingUser, err := db.IsUserByEmail(user.Email)
 
 	if existingUser.ID == 0 {
 		c.JSON(400, gin.H{"error": "user does not exist", "from": op})
