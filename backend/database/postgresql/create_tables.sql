@@ -135,3 +135,13 @@ create table if not exists status (
     foreign key (refbid) references bid (id_bid),
     type varchar(40) not null
 );
+
+create table if not exists diet_templates (
+    id serial primary key,
+    diet text not null
+);
+
+create table if not exists workout_templates (
+    id serial primary key,
+    workout text not null
+);

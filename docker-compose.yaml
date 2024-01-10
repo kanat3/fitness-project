@@ -30,7 +30,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - ./project:/etc/project
+      - ./:/etc/project
     links:
       - "postgresql_db:postgresql_db"
     networks:

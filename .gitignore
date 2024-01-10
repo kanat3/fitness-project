@@ -20,6 +20,7 @@
 backend/static
 backend/assets
 backend/frontend
+backend/config/local.yaml
 # default .exe file of backend
 backend/backend
 # docker cache

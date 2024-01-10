@@ -17,9 +17,10 @@ front:
 	####
 
 all-local: clean front
+	cd $(current_path)/backend/config && sed -i 's/host: "fitness_db"/host: "localhost"/g' local.yaml
 	cd $(current_path)/backend && go build
 
-all-in-container: front
+all-in-container:
 	cd $(current_path)/backend && go build
 
 docker-down:
@@ -36,6 +37,8 @@ database-up:
 
 clean: docker-down
 
+	cd $(current_path)/backend/config && sed -i 's/host: "fitness_db"/host: "localhost"/g' local.yaml
+
 	if [ -d "$(current_path)/backend/database/cache" ]; then \
 		sudo rm -rf "$(current_path)/backend/database/cache"; \
 	fi
@@ -48,25 +51,9 @@ clean: docker-down
 		sudo rm -rf "$(current_path)/project"; \
 	fi
 
-volume:
-
-	if [ -d "$(current_path)/backend/database/cache" ]; then \
-		sudo rm -rf "$(current_path)/backend/database/cache"; \
-	fi
-
-	sudo rm -rf $(current_path)/project
-	cd $(current_path)
-	mkdir -p $(current_path)/project
-	cp -r $(current_path)/backend $(current_path)/project
-
+volume: front
 	# set config for container
-	cd $(current_path)/project/backend/config && sed -i 's/host: "local"/host: "fitness_db"/g' local.yaml
-
-	cp -r $(current_path)/frontend $(current_path)/project
-	cp $(current_path)/go.mod $(current_path)/project
-	cp -r $(current_path)/go.sum $(current_path)/project
-	cp -r $(current_path)/Makefile $(current_path)/project
-	cp -r $(current_path)/scripts $(current_path)/project
+	cd $(current_path)/backend/config && sed -i 's/host: "localhost"/host: "fitness_db"/g' local.yaml
 
 docker: clean
 
@@ -81,7 +68,7 @@ docker: clean
 	cp -r $(current_path)/scripts $(current_path)/project
 
 	# set config for docker-container
-	cd $(current_path)/project/backend/config && sed -i 's/host: "local"/host: "fitness_db"/g' local.yaml
+	cd $(current_path)/project/backend/config && sed -i 's/host: "localhost"/host: "fitness_db"/g' local.yaml
 
 	cd $(current_path)/backend/database && sudo docker-compose up --build -d
 	cd $(current_path)/scripts && sudo docker build -t fitness-project:latest .
@@ -101,5 +88,5 @@ update:
 
 all-compose: clean volume
 
-	cd $(current_path)/project
+	cd $(current_path)/backend
 	sudo docker-compose up --build
