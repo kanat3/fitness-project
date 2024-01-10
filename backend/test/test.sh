@@ -35,3 +35,6 @@ echo ""
 # test account - OK
 curl -i -X POST -H 'Content-Type: application/json' http://localhost:8080/account/99
 echo ""
+# test set bid - OK
+curl -i -X POST -H 'Content-Type: application/json' -d '{"optional_goal": "my test goal", "optional_message": "hello tinder"}' http://localhost:8080/account/99/bid
+echo ""

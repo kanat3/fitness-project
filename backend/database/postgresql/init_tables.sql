@@ -19,5 +19,5 @@ VALUES ( '99',
   'test@mail.coom',
   'https://example.com/profile_images/some-jpg.png',
   CURRENT_TIMESTAMP,
-  'securepassword'
+  '$2a$14$0PLKrEp1bFk/6fy74z24SeAPcwjVZk73sBf/jq5BjkIh1vv0.NNU2'
 );

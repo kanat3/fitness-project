@@ -12,8 +12,9 @@ func InitHandlers(r *gin.Engine) {
 	r.POST("/signup", middleware.Signup)
 	r.POST("/reset-password", middleware.IsAuthorized(), middleware.ResetPassword)
 	r.POST("/reset-email", middleware.ResetEmail)
+	/* TODO: after testing, need to set middleware */
 	r.POST("/account/:Id", middleware.Account)
-	r.POST("/account/bid", middleware.SetBid)
+	r.POST("/account/:Id/bid", middleware.SetBid)
 
 	r.GET("/logout", middleware.Logout)
 	r.GET("/status", Status)
@@ -25,6 +26,7 @@ func InitHandlers(r *gin.Engine) {
 	r.LoadHTMLGlob("frontend/*.html")
 	r.Static("frontend", "./frontend")
 
+	/* add frontend */
 	r.GET("/about", About)
 	r.GET("/trainers", Trainers)
 	r.GET("/contacts", Contacts)

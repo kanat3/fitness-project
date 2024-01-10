@@ -349,7 +349,7 @@ func (s *Storage) SetStructBid(bid Bid) error {
 	query :=
 		"INSERT INTO bid (optional_goal, optional_message, created) VALUES ($1, $2, $3)"
 
-	_, err := s.db.Exec(query, bid.OptionalGoal, bid.OptionalMessage)
+	_, err := s.db.Exec(query, bid.OptionalGoal, bid.OptionalMessage, bid.Created)
 	if err != nil {
 		return fmt.Errorf("%s: %w", op, err)
 	}
