@@ -143,5 +143,6 @@ create table if not exists diet_templates (
 
 create table if not exists workout_templates (
     id serial primary key,
+    type varchar(40),
     workout text not null
 );

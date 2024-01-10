@@ -13,3 +13,4 @@ services:
     volumes:
       - ./cache/postgres-data/data:/var/lib/postgresql/data
       - ./postgresql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./postgresql/init_tables.sql:/docker-entrypoint-initdb.d/init_tables.sql
