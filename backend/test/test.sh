@@ -24,6 +24,11 @@ echo ""
 #test reset password - OK - test without jwt
 curl -i -X POST -H 'Content-Type: application/json' -d '{"email": "new-test@mail.ru", "password": "wrong"}' http://localhost:8080/reset-password
 echo ""
+#get jwt
+token=$(curl -i -X POST -H 'Content-Type: application/json' -d '{"email": "new-test@mail.ru", "password": "12334"}' http://localhost:8080/login | grep -oP '(?<=token=)[^;]*')
+echo ""
+echo "token: token=$token"
+echo ""
 #test reset password - OK - test without jwt
-curl -i -X POST -H 'Content-Type: application/json' -d '{"email": "new-test@mail.ru", "password": "12334"}' http://localhost:8080/reset-password
+curl -i -X POST -H 'Content-Type: application/json' -b token=$token -d '{"email": "new-test@mail.ru", "password": "12334"}' http://localhost:8080/reset-password
 echo ""

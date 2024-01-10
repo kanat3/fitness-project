@@ -10,7 +10,7 @@ func InitHandlers(r *gin.Engine) {
 
 	r.POST("/login", middleware.Login)
 	r.POST("/signup", middleware.Signup)
-	r.POST("/reset-password", middleware.ResetPassword)
+	r.POST("/reset-password", middleware.IsAuthorized(), middleware.ResetPassword)
 	r.POST("/reset-email", middleware.ResetEmail)
 	r.POST("/account", middleware.Account)
 	/* TODO: need another path */
