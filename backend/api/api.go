@@ -14,7 +14,7 @@ func InitHandlers(r *gin.Engine) {
 	r.POST("/reset-email", middleware.ResetEmail)
 	/* TODO: after testing, need to set middleware */
 	r.POST("/account/:Id", middleware.Account)
-	r.POST("/account/:Id/bid", middleware.SetBid)
+	r.POST("/account/:Id/set_bid", middleware.SetBid)
 
 	r.GET("/logout", middleware.Logout)
 	r.GET("/status", Status)
@@ -22,6 +22,7 @@ func InitHandlers(r *gin.Engine) {
 	r.GET("/signup", Signup)
 
 	r.GET("/account/bid", middleware.GetBid)
+	r.GET("/account/:Id/get_bid", middleware.GetBid)
 
 	r.LoadHTMLGlob("frontend/*.html")
 	r.Static("frontend", "./frontend")

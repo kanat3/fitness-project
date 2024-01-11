@@ -342,19 +342,18 @@ func (s *Storage) SetStructCoachClassesList(ccl CoachClassesList) error {
 	return nil
 }
 
-func (s *Storage) SetStructBid(bid Bid) error {
+func (s *Storage) SetStructBid(bid Bid) (int, error) {
 
 	const op = "storage.SetStructBid"
 
-	query :=
-		"INSERT INTO bid (optional_goal, optional_message, created) VALUES ($1, $2, $3)"
+	id := 0
+	err := s.db.QueryRow("INSERT INTO bid (optional_goal, optional_message, created) VALUES ($1, $2, $3) RETURNING id_bid", bid.OptionalGoal, bid.OptionalMessage, bid.Created).Scan(&id)
 
-	_, err := s.db.Exec(query, bid.OptionalGoal, bid.OptionalMessage, bid.Created)
 	if err != nil {
-		return fmt.Errorf("%s: %w", op, err)
+		return 0, nil
 	}
 
-	return nil
+	return id, nil
 }
 
 func (s *Storage) SetStructBidByUser(bbu BidByUser) error {
@@ -652,10 +651,10 @@ func (s *Storage) GetLastBidByUser(userID int) (Bid, error) {
 
 	var bid Bid
 
-	err := s.db.QueryRow(fmt.Sprintf("SELECT id_bid, optional_goal, optional_message FROM bid"+
-		"JOIN bid_by_user bbu ON bbu.refid_bid = bid.id_bid"+
-		"WHERE bid.id_bid = %d"+
-		"ORDER BY bid.created"+
+	err := s.db.QueryRow(fmt.Sprintf("SELECT id_bid, optional_goal, optional_message, created FROM bid "+
+		"JOIN bid_by_user bbu ON bbu.refid_bid = bid.id_bid "+
+		"WHERE bbu.refusers = %d "+
+		"ORDER BY bid.created "+
 		"LIMIT 1", userID)).Scan(
 		&bid.ID,
 		&bid.OptionalGoal,
